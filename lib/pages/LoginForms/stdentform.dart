@@ -1,4 +1,6 @@
 import 'package:classadmin/Auth/auth.dart';
+import 'package:classadmin/pages/dashbords/studentdashbord.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class StudentForm extends StatefulWidget {
@@ -37,11 +39,14 @@ class _StudentFormState extends State<StudentForm> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                   controller: emailController,
                   validator: (val){
                     if(val!.isEmpty){
                       return "enter your email";
-                    }else if(val.contains("@")){
+                    }else if(!val.contains("@")){
                       return "enter a vail Email";
                     }else{
                       return null;
@@ -57,6 +62,10 @@ class _StudentFormState extends State<StudentForm> {
                   ),
                 ),
                 TextFormField(
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  obscureText: true,
                   controller: passwordController,
 
                   validator: (val){
@@ -83,7 +92,15 @@ class _StudentFormState extends State<StudentForm> {
                 GestureDetector(
                   onTap: (){
                     if(_formKey.currentState!.validate()){
-                      Auth().signIn(emailController.text, passwordController.text);
+                      Auth().signIn(emailController.text, passwordController.text).then((value) {
+                        FirebaseAuth.instance.authStateChanges()
+                            .listen((User? user) {
+                          if(user != null){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>StudentDashBoard(email: emailController.text,)));
+                          }
+                        });
+                      });
+
                     }
                   },
                   child: Container(
