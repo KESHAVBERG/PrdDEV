@@ -1,3 +1,4 @@
+import 'package:classadmin/Auth/auth.dart';
 import 'package:flutter/material.dart';
 
 class StudentForm extends StatefulWidget {
@@ -82,7 +83,7 @@ class _StudentFormState extends State<StudentForm> {
                 GestureDetector(
                   onTap: (){
                     if(_formKey.currentState!.validate()){
-
+                      Auth().signIn(emailController.text, passwordController.text);
                     }
                   },
                   child: Container(

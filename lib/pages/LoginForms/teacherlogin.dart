@@ -1,3 +1,4 @@
+import 'package:classadmin/Auth/auth.dart';
 import 'package:flutter/material.dart';
 
 class TeacherLogin extends StatefulWidget {
@@ -34,11 +35,14 @@ class _TeacherLoginState extends State<TeacherLogin> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                   controller: emailController,
                   validator: (val){
                     if(val!.isEmpty){
                       return "enter your email";
-                    }else if(val.contains("@")){
+                    }else if(!val.contains("@")){
                       return "enter a vail Email";
                     }else{
                       return null;
@@ -55,6 +59,10 @@ class _TeacherLoginState extends State<TeacherLogin> {
                 ),
                 TextFormField(
                   controller: passwordController,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  obscureText: true,
 
                   validator: (val){
                     if(val!.isEmpty){
@@ -67,6 +75,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
                   },
                   decoration:const InputDecoration(
                     hintText:"password",
+
                     hintStyle: TextStyle(
                         color: Colors.white
                     ),
@@ -80,7 +89,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
                 GestureDetector(
                   onTap: (){
                     if(_formKey.currentState!.validate()){
-
+                      Auth().signIn(emailController.text, passwordController.text);
                     }
                   },
                   child: Container(
