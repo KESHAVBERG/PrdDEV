@@ -1,4 +1,6 @@
 import 'package:classadmin/Auth/auth.dart';
+import 'package:classadmin/pages/dashbords/teacherdashboard.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class TeacherLogin extends StatefulWidget {
@@ -89,7 +91,15 @@ class _TeacherLoginState extends State<TeacherLogin> {
                 GestureDetector(
                   onTap: (){
                     if(_formKey.currentState!.validate()){
-                      Auth().signIn(emailController.text, passwordController.text);
+                      Auth().signIn(emailController.text, passwordController.text).then((value) {
+                        FirebaseAuth.instance.authStateChanges()
+                            .listen((User? user) {
+                              if(user != null){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>TeacherDashBord(email: emailController.text,)));
+                              }
+                        });
+                      });
+                      
                     }
                   },
                   child: Container(
