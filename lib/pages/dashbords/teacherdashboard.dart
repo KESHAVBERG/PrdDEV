@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:classadmin/pages/teachers/handle.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -70,7 +73,13 @@ class _TeacherDashBordState extends State<TeacherDashBord> {
                       ),
                     ),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Handles(id: data['id'])));
+                        },
                         child: const Text(
                           "Classes you handle",
                           style: const TextStyle(
@@ -81,23 +90,28 @@ class _TeacherDashBordState extends State<TeacherDashBord> {
                         )),
                     TextButton(
                         onPressed: () {},
-                        child: const Text("upload Assingment",
+                        child: const Text(
+                          "upload Assingment",
                           style: const TextStyle(
                             color: Colors.blue,
                             fontWeight: FontWeight.normal,
                             fontSize: 20,
-                          ),)),
+                          ),
+                        )),
                     TextButton(
-                        onPressed: () {}, child: const Text("Add Exam Link",
-                      style: const TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 20,
-                      ),)),
+                        onPressed: () {},
+                        child: const Text(
+                          "Add Exam Link",
+                          style: const TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 20,
+                          ),
+                        )),
                   ],
                 );
               }
-              return Text("Loadin");
+              return Text("Loading");
             },
           ),
         ));
